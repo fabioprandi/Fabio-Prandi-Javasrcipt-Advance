@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0' />
+    <meta property=”og:title” content= "Find your book" />
+    <meta property=”og:image” content= "" />
+    <meta property=”og:url” content= "" /> <!---->
+
+    <meta name="description" content="Boost your reading">
+    <meta name="keywords" content="book">
+    <meta name="author" content="Fabio Prandi">
+    <link rel="icon" type="image/x-icon" href="./img/favicon.ico">
+    <link rel="stylesheet" href="./css/style.css">
+    <script src="./js/libri.js"></script>
+    <title>Find your book</title>
+</head>
+<body>
+
+    <div id="background"></div>
+    
+    <input id="textbox" type="textbox" placeholder="Search your book">
+    <div>
+        <button id="button">Go to your book</button>
+    </div>
+
+
+
+    <script>
+    const button = document.getElementById('button');
+    const input = document.getElementById('textbox');
+    button.addEventListener("click", () => {
+    const searchText = input.value;
+    fetch('https://openlibrary.org/search' + encodeURIComponent(searchText))
+    .then(response => response.json())
+    .then(data => {
+      console.log(data);
+    })
+    .catch(error => {
+      console.error(error);
+    });
+});
+
+
+    </script>
+</body>
+</html>
