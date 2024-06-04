@@ -11,13 +11,13 @@ button.addEventListener('click', () => {
     .then(response => response.json())
     .then(data => {
       const results = data.works.map(doc => {
-        const title = doc.title || 'Titolo non disponibile';
-        const authors = doc.author_name ? doc.author_name.join(', ') : 'Autore non disponibile';
+        const title = doc.title || 'Title unknown';
+        const authors = doc.author_name ? doc.author_name.join(', ') : 'Author unknown';
         return `
           <div class="result">
             <h3>${title}</h3>
             <p>Autore: ${authors}</p>
-            <button class="view-description-btn" data-key="${doc.key}">Vedi descrizione</button>
+            <button class="view-description-btn" data-key="${doc.key}">View details</button>
           </div>
         `;
       }).join('');
@@ -37,7 +37,7 @@ resultsElement.addEventListener('click', event => {
     fetch(descriptionApiUrl)
       .then(response => response.json())
       .then(data => {
-        const description = data.description || 'Descrizione non disponibile';
+        const description = data.description || 'No details';
         console.log(description);
       })
       .catch(error => {
