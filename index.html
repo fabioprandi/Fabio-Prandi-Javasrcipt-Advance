@@ -13,36 +13,20 @@
     <meta name="author" content="Fabio Prandi">
     <link rel="icon" type="image/x-icon" href="./img/favicon.ico">
     <link rel="stylesheet" href="./css/style.css">
-    <script src="./js/libri.js"></script>
     <title>Find your book</title>
 </head>
 <body>
 
     <div id="background"></div>
-    
-    <input id="textbox" type="textbox" placeholder="Search your book">
-    <div>
-        <button id="button">Go to your book</button>
+    <div class="text">
+      <input id="myInput" type="textbox" placeholder="Search your book">
+      <button id="myButton">Go to your book</button>
     </div>
+    <div id="results"></div>
 
 
 
-    <script>
-    const button = document.getElementById('button');
-    const input = document.getElementById('textbox');
-    button.addEventListener("click", () => {
-    const searchText = input.value;
-    fetch('https://openlibrary.org/search' + encodeURIComponent(searchText))
-    .then(response => response.json())
-    .then(data => {
-      console.log(data);
-    })
-    .catch(error => {
-      console.error(error);
-    });
-});
 
-
-    </script>
+    <script src="/js/libri.js"></script>
 </body>
 </html>
