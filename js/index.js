@@ -15,23 +15,26 @@ button.addEventListener('click', async () => {
 
     const data = await response.json();
 
-    const results = data.works.map(doc => {
+    const results = await Promise.all(data.works.map(async (doc) => {
       const title = doc.title || 'Titolo sconosciuto';
-      const authors = doc.author_name ? doc.author_name.join(', ') : 'Autore sconosciuto';
-      const date = doc.publication_date || 'Data sconosciuta';
+      const authors = doc.authors ? await Promise.all(doc.authors.map(async (author) => {
+          const authorResponse = await fetch(`https://openlibrary.org${author.key}.json`);
+          const authorData = await authorResponse.json();
+          return authorData.name;
+      })) : ['Autore sconosciuto'];
+  
       return `
-        <div class="result">
-          <h3>${title}</h3>
-          <p>Autore: ${authors}</p>
-          <p>Data: ${date}</p>
-          <button class="view-description-btn" data-key="${doc.key}">Visualizza dettagli</button>
-        </div>
+          <div class="result">
+              <h3>${title}</h3>
+              <p>Autore: ${authors.join(', ')}</p>
+              <button class="view-description-btn" data-key="${doc.key}">Visualizza dettagli</button>
+          </div>
       `;
-    }).join('');
-    resultsElement.innerHTML = results;
-  } catch (error) {
+  }));
+  resultsElement.innerHTML = results.join('');
+} catch (error) {
     console.error(error);
-  }
+}
 });
 
 resultsElement.addEventListener('click', async (event) => {
@@ -55,7 +58,3 @@ resultsElement.addEventListener('click', async (event) => {
     }
   }
 });
-
-
-
-
